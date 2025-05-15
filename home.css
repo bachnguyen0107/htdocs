@@ -1,0 +1,57 @@
+body {
+    padding-top: 20px;
+    background-color: #f8f9fa;
+}
+.note-card {
+    transition: all 0.3s ease;
+    height: 100%;
+}
+.note-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+.empty-notes {
+    text-align: center;
+    padding: 60px 0;
+}
+.grid-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+.list-view .note-card {
+    width: 100%;
+}
+#noteEditor {
+    position: sticky;
+    top: 20px;
+}
+.auto-save-status {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+.bi::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+}
+.bi-grid::before {
+    content: "☷";
+}
+.bi-list-ul::before {
+    content: "☰";
+}
+.bi-pencil::before {
+    content: "✏️";
+}
+.bi-trash::before {
+    content: "🗑️";
+}
+.bi-person-plus::before {
+    content: "👤+";
+}
+.bi-person-check::before {
+    content: "👤✓";
+}
