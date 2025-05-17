@@ -22,8 +22,8 @@ $user_result = $user_stmt->get_result();
 $user_data = $user_result->fetch_assoc();
 $user_id = $user_data['id'];
 
-// Get the note
-$note_stmt = $conn->prepare("SELECT title, content FROM notes WHERE id = ? AND user_id = ?");
+// Get the note including password protection status
+$note_stmt = $conn->prepare("SELECT title, content, is_password_protected FROM notes WHERE id = ? AND user_id = ?");
 $note_stmt->bind_param("ii", $note_id, $user_id);
 $note_stmt->execute();
 $note_result = $note_stmt->get_result();
@@ -31,6 +31,12 @@ $note = $note_result->fetch_assoc();
 
 if (!$note) {
     echo "Note not found or you don't have permission to edit it.";
+    exit();
+}
+
+// Check password protection
+if ($note['is_password_protected'] && !isset($_SESSION['verified_notes'][$note_id])) {
+    header("Location: view-note.php?id=" . $note_id);
     exit();
 }
 
@@ -62,6 +68,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="card">
         <div class="card-body">
             <h3>Edit Note</h3>
+            <?php if ($note['is_password_protected']): ?>
+                <div class="alert alert-info mb-3">
+                    This note is password protected. Changes will maintain the protection.
+                </div>
+            <?php endif; ?>
             <form method="POST">
                 <div class="mb-3">
                     <label class="form-label">Title</label>

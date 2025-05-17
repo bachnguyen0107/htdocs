@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2025 at 04:07 AM
+-- Generation Time: May 17, 2025 at 08:50 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -61,18 +61,20 @@ CREATE TABLE `notes` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `is_pinned` tinyint(1) DEFAULT 0,
-  `pinned_at` timestamp NULL DEFAULT NULL
+  `pinned_at` timestamp NULL DEFAULT NULL,
+  `is_password_protected` tinyint(1) DEFAULT 0,
+  `password_hash` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `notes`
 --
 
-INSERT INTO `notes` (`id`, `user_id`, `title`, `content`, `created_at`, `updated_at`, `is_pinned`, `pinned_at`) VALUES
-(67, 10, '1', '1', '2025-05-17 01:23:13', '2025-05-17 01:47:23', 0, NULL),
-(68, 10, '2', '2', '2025-05-17 01:23:17', '2025-05-17 01:45:23', 0, NULL),
-(69, 10, '3', '3', '2025-05-17 01:23:21', '2025-05-17 01:47:24', 0, NULL),
-(70, 10, '4', '4', '2025-05-17 01:23:26', '2025-05-17 02:03:08', 0, NULL);
+INSERT INTO `notes` (`id`, `user_id`, `title`, `content`, `created_at`, `updated_at`, `is_pinned`, `pinned_at`, `is_password_protected`, `password_hash`) VALUES
+(67, 10, '1', '1', '2025-05-17 01:23:13', '2025-05-17 01:47:23', 0, NULL, 0, NULL),
+(68, 10, '2', '2', '2025-05-17 01:23:17', '2025-05-17 01:45:23', 0, NULL, 0, NULL),
+(69, 10, '3.3', '3,.3', '2025-05-17 01:23:21', '2025-05-17 18:42:08', 0, NULL, 0, NULL),
+(72, 10, '4', '4', '2025-05-17 16:02:44', '2025-05-17 18:45:09', 0, NULL, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -242,13 +244,13 @@ ALTER TABLE `user_preferences`
 -- AUTO_INCREMENT for table `labels`
 --
 ALTER TABLE `labels`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `notes`
 --
 ALTER TABLE `notes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `note_attachments`

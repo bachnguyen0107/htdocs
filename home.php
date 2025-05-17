@@ -185,9 +185,10 @@ $labels_stmt->bind_param("i", $user_id);
 $labels_stmt->execute();
 $user_labels = $labels_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
-// Get notes with their labels
+//query
 $notes = $conn->prepare("
-    SELECT n.id, n.title, n.content, n.updated_at, n.is_pinned, n.pinned_at,
+    SELECT n.id, n.title, n.content, n.updated_at, n.is_pinned, n.pinned_at, 
+           n.is_password_protected,  /* Add this */
            GROUP_CONCAT(l.id) AS label_ids,
            GROUP_CONCAT(l.name) AS label_names,
            GROUP_CONCAT(l.color) AS label_colors
@@ -221,6 +222,7 @@ foreach ($all_notes as &$note) {
     }
 }
 unset($note); // Break the reference
+
 
 $conn->close();
 ?>
@@ -496,6 +498,9 @@ $conn->close();
                                     <div class="card-body position-relative">
                                         <?php if ($note['is_pinned']): ?>
                                             <span class="badge bg-warning text-dark mb-2">Pinned</span>
+                                        <?php endif; ?>
+                                        <?php if ($note['is_password_protected']): ?>
+                                            <span class="badge bg-info text-dark mb-2">🔒 Protected</span>
                                         <?php endif; ?>
 
                                         <!-- Labels display -->
