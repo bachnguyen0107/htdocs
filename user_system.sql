@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2025 at 11:23 PM
+-- Generation Time: May 17, 2025 at 04:07 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -36,6 +36,20 @@ CREATE TABLE `email_verification_tokens` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `labels`
+--
+
+CREATE TABLE `labels` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `color` varchar(20) DEFAULT '#6c757d',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `notes`
 --
 
@@ -49,6 +63,16 @@ CREATE TABLE `notes` (
   `is_pinned` tinyint(1) DEFAULT 0,
   `pinned_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `notes`
+--
+
+INSERT INTO `notes` (`id`, `user_id`, `title`, `content`, `created_at`, `updated_at`, `is_pinned`, `pinned_at`) VALUES
+(67, 10, '1', '1', '2025-05-17 01:23:13', '2025-05-17 01:47:23', 0, NULL),
+(68, 10, '2', '2', '2025-05-17 01:23:17', '2025-05-17 01:45:23', 0, NULL),
+(69, 10, '3', '3', '2025-05-17 01:23:21', '2025-05-17 01:47:24', 0, NULL),
+(70, 10, '4', '4', '2025-05-17 01:23:26', '2025-05-17 02:03:08', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -66,6 +90,41 @@ CREATE TABLE `note_attachments` (
   `file_size` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `note_labels`
+--
+
+CREATE TABLE `note_labels` (
+  `note_id` int(11) NOT NULL,
+  `label_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_reset_tokens`
+--
+
+CREATE TABLE `password_reset_tokens` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `token` varchar(64) DEFAULT NULL,
+  `expires_at` datetime DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `otp` varchar(6) DEFAULT NULL,
+  `otp_expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `password_reset_tokens`
+--
+
+INSERT INTO `password_reset_tokens` (`id`, `user_id`, `token`, `expires_at`, `email`, `otp`, `otp_expires_at`) VALUES
+(9, 10, NULL, NULL, NULL, '976812', '2025-05-17 02:51:55'),
+(11, 10, NULL, NULL, NULL, '846416', '2025-05-17 02:54:01');
 
 -- --------------------------------------------------------
 
@@ -94,7 +153,7 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`, `avatar`, `bio`, `fu
 (5, 'test', '$2y$10$nmROpm3Umip6n2YPCB6XfubOHCMCqkHpfymPjCqkyGFmGL/Vyeq3y', 'testgmail@gmail.com', 'default.jpg', NULL, NULL, 0),
 (6, 'test1', '$2y$10$fU86vM0ODmpUR9l6d5.L0uxRzxuF.DmYWCs9IbEu9XSy5cMGd/E9u', 'a32378@thanglong.edu.vn', 'default.jpg', NULL, NULL, 0),
 (7, 'test2', '$2y$10$kZA5ejELWKHILLNMkFNCNuOeC4CHNMNBSQrRTW0XB8MXnRoYYV8IO', 'tr@gmail.com', 'default.jpg', NULL, NULL, 0),
-(9, 'nguyen', '$2y$10$cCYj.q7Blh3mTlATyjQH4eqq54c7ZuaS/sD1wQnmiTci2GhQ5dOti', 'tranbachnguyen0805@gmail.com', 'default.jpg', NULL, NULL, 1);
+(10, 'nguyen', '$2y$10$O9IoMZdqWQ27ARE7BlevG.RpyGTiibI2EvGAinLHBtzzEe0vbLXc2', 'tranbachnguyen0805@gmail.com', 'default.jpg', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -127,6 +186,13 @@ ALTER TABLE `email_verification_tokens`
   ADD PRIMARY KEY (`user_id`);
 
 --
+-- Indexes for table `labels`
+--
+ALTER TABLE `labels`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `notes`
 --
 ALTER TABLE `notes`
@@ -139,6 +205,20 @@ ALTER TABLE `notes`
 ALTER TABLE `note_attachments`
   ADD PRIMARY KEY (`id`),
   ADD KEY `note_id` (`note_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `note_labels`
+--
+ALTER TABLE `note_labels`
+  ADD PRIMARY KEY (`note_id`,`label_id`),
+  ADD KEY `label_id` (`label_id`);
+
+--
+-- Indexes for table `password_reset_tokens`
+--
+ALTER TABLE `password_reset_tokens`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
 
 --
@@ -159,10 +239,16 @@ ALTER TABLE `user_preferences`
 --
 
 --
+-- AUTO_INCREMENT for table `labels`
+--
+ALTER TABLE `labels`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `notes`
 --
 ALTER TABLE `notes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `note_attachments`
@@ -171,10 +257,16 @@ ALTER TABLE `note_attachments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `password_reset_tokens`
+--
+ALTER TABLE `password_reset_tokens`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
@@ -185,6 +277,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `email_verification_tokens`
   ADD CONSTRAINT `email_verification_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `labels`
+--
+ALTER TABLE `labels`
+  ADD CONSTRAINT `labels_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `notes`
@@ -198,6 +296,12 @@ ALTER TABLE `notes`
 ALTER TABLE `note_attachments`
   ADD CONSTRAINT `note_attachments_ibfk_1` FOREIGN KEY (`note_id`) REFERENCES `notes` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `note_attachments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `note_labels`
+--
+ALTER TABLE `note_labels`
+  ADD CONSTRAINT `note_labels_ibfk_1` FOREIGN KEY (`note_id`) REFERENCES `notes` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `user_preferences`
