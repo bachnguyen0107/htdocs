@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2025 at 08:50 PM
+-- Generation Time: May 18, 2025 at 08:52 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `user_system`
 --
+CREATE DATABASE IF NOT EXISTS `user_system` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `user_system`;
 
 -- --------------------------------------------------------
 
@@ -65,16 +67,6 @@ CREATE TABLE `notes` (
   `is_password_protected` tinyint(1) DEFAULT 0,
   `password_hash` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `notes`
---
-
-INSERT INTO `notes` (`id`, `user_id`, `title`, `content`, `created_at`, `updated_at`, `is_pinned`, `pinned_at`, `is_password_protected`, `password_hash`) VALUES
-(67, 10, '1', '1', '2025-05-17 01:23:13', '2025-05-17 01:47:23', 0, NULL, 0, NULL),
-(68, 10, '2', '2', '2025-05-17 01:23:17', '2025-05-17 01:45:23', 0, NULL, 0, NULL),
-(69, 10, '3.3', '3,.3', '2025-05-17 01:23:21', '2025-05-17 18:42:08', 0, NULL, 0, NULL),
-(72, 10, '4', '4', '2025-05-17 16:02:44', '2025-05-17 18:45:09', 0, NULL, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -126,7 +118,8 @@ CREATE TABLE `password_reset_tokens` (
 
 INSERT INTO `password_reset_tokens` (`id`, `user_id`, `token`, `expires_at`, `email`, `otp`, `otp_expires_at`) VALUES
 (9, 10, NULL, NULL, NULL, '976812', '2025-05-17 02:51:55'),
-(11, 10, NULL, NULL, NULL, '846416', '2025-05-17 02:54:01');
+(11, 10, NULL, NULL, NULL, '846416', '2025-05-17 02:54:01'),
+(16, 12, '04fc2ac9cd371f2e9c07b38be9a30ece3676d3e0a0bf237354cb37f220e10169', '2025-05-18 13:24:33', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -145,18 +138,6 @@ CREATE TABLE `users` (
   `is_verified` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `username`, `password`, `email`, `avatar`, `bio`, `full_name`, `is_verified`) VALUES
-(3, 'bach', '$2y$10$xZwr9OJnQldt0rLomnbgc.R47PHLn3w2HhlN0CPQFuECAqj51lQNe', 'fffff@gmail.com', '6820482bc5a3c.jpg', '', '', 0),
-(4, 'rrr', '$2y$10$2aM9.JFymhgZ0oPdIPKp2OlK6CXXbp/2FtE4JhckLvH.Vu675cfra', 'rrrr@gmail.com', 'default.jpg', NULL, NULL, 0),
-(5, 'test', '$2y$10$nmROpm3Umip6n2YPCB6XfubOHCMCqkHpfymPjCqkyGFmGL/Vyeq3y', 'testgmail@gmail.com', 'default.jpg', NULL, NULL, 0),
-(6, 'test1', '$2y$10$fU86vM0ODmpUR9l6d5.L0uxRzxuF.DmYWCs9IbEu9XSy5cMGd/E9u', 'a32378@thanglong.edu.vn', 'default.jpg', NULL, NULL, 0),
-(7, 'test2', '$2y$10$kZA5ejELWKHILLNMkFNCNuOeC4CHNMNBSQrRTW0XB8MXnRoYYV8IO', 'tr@gmail.com', 'default.jpg', NULL, NULL, 0),
-(10, 'nguyen', '$2y$10$O9IoMZdqWQ27ARE7BlevG.RpyGTiibI2EvGAinLHBtzzEe0vbLXc2', 'tranbachnguyen0805@gmail.com', 'default.jpg', NULL, NULL, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -169,13 +150,6 @@ CREATE TABLE `user_preferences` (
   `font_size` varchar(20) DEFAULT 'medium',
   `note_color` varchar(20) DEFAULT 'default'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `user_preferences`
---
-
-INSERT INTO `user_preferences` (`user_id`, `theme`, `font_size`, `note_color`) VALUES
-(3, 'dark', 'medium', 'yellow');
 
 --
 -- Indexes for dumped tables
@@ -244,13 +218,13 @@ ALTER TABLE `user_preferences`
 -- AUTO_INCREMENT for table `labels`
 --
 ALTER TABLE `labels`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `notes`
 --
 ALTER TABLE `notes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `note_attachments`
@@ -262,13 +236,13 @@ ALTER TABLE `note_attachments`
 -- AUTO_INCREMENT for table `password_reset_tokens`
 --
 ALTER TABLE `password_reset_tokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables

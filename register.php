@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate password match
     if ($password !== $confirm_password) {
-        die("Error: Passwords do not match. <a href='register.html'>Try again</a>");
+        die("Error: Passwords do not match. <a href='register.php'>Try again</a>");
     }
 
     // Validate email format
